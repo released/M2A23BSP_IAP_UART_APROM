@@ -13,7 +13,7 @@ update @ 2026/01/23
 	
 		- under sct file (uart_iap.sct) , will allocate flash size 
 							
-		APROM_Bootloader.bin : 0x00000 0x3000 (reserve 12K size , to store extra boot loader code 
+		APROM_Bootloader.bin : 0x00000 0x3000 (reserve 12K size , to store extra boot loader code) 
 
 ![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_KEIL_sct.jpg)		
 	
