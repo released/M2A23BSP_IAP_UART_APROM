@@ -15,7 +15,7 @@ update @ 2026/01/23
 							
 		APROM_Bootloader.bin : 0x00000 0x3000 (reserve 12K size , to store extra boot loader code 
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_KEIL_sct.jpg)		
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_KEIL_sct.jpg)		
 	
 		- when power on , will check power on source (ex : power on reset , nReset , from application code)
 	
@@ -25,46 +25,46 @@ update @ 2026/01/23
 		
 		- power on from ISP_UART , and CRC calculate correct		
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_from_boot_to_app.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_from_boot_to_app.jpg)
 				
 		- if two checksum result are different , will stuck in Boot loader , and wait for ISP code update
 		
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_checksum_err.jpg)		
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_checksum_err.jpg)		
 		
 		- if boot from application code , to ISP_UART , by press digit Z
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_press_Z_to_boot.jpg)	
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_press_Z_to_boot.jpg)	
 
 		- if boot from application code , to ISP_UART , by press nRESET pin in EVM
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_press_nRESET_to_boot.jpg)	
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_press_nRESET_to_boot.jpg)	
 
 		- when use ISP tool , select APROM , Reset and run 
 		
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/ISP_connect.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/ISP_connect.jpg)
 
 		- when use ISP tool , during update 
 		
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/ISP_during_update.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/ISP_during_update.jpg)
 
 		- under BOOT code  , during update 
 		
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_during_upgrade.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_during_upgrade.jpg)
 
 		- when ISP upgrade finish ( compare check and jump to app code)
 		
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_upgrade_finish.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_upgrade_finish.jpg)
 
 	
 	- Application code project : AP
 
 		- under sct file (APROM_application.sct) , will allocate app code flash size (0x3000 ~ 0x20000 , size : 0x1D000)
 		
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_KEIL_sct.jpg)		
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_KEIL_sct.jpg)		
 	
 		- use SRecord , to calculate application code checksum , add binary to hex , by SRecord tool
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_KEIL_checksum_calculate.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_KEIL_checksum_calculate.jpg)
 	
 		- SRecord file : srec_cat.exe 
 
@@ -72,15 +72,15 @@ update @ 2026/01/23
 		
 		- check sum calculate will start from 0x3000 to 0x20000-4 : 0x1FFFC , and store in 0x1FFFC , the last 4 bytes 
 				
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_KEIL_output_file.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_KEIL_output_file.jpg)
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_SRecord_cmd_file.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_SRecord_cmd_file.jpg)
 		
 		- after project compile finish , binary size will be 116K (total application code size : 0x1D000)
 		
 		- under app code , press 1 , will erase checksum , and return to BOOT code
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_erase_checksum.jpg)		
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_erase_checksum.jpg)		
 		
 				
 4. Flash allocation
@@ -91,7 +91,7 @@ update @ 2026/01/23
 			
 	- Application code Chcecksum storage : 0x1FFFC
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/FLASH_calculate.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/FLASH_calculate.jpg)
 	
 5. Function assignment
 
@@ -103,22 +103,22 @@ update @ 2026/01/23
 
 below is boot loader project , Config setting (APROM WITH IAP)
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_ICP_Config.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_ICP_Config.jpg)
 
 below is boot loader project , ICP programming setting 
 
 - APROM_Bootloader.bin : @ APROM 0x0000
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_ICP_Update.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_ICP_Update.jpg)
 
 7. under Application code KEIL project setting 
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_KEIL_checksum_calculate.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_KEIL_checksum_calculate.jpg)
 
 in Application project , press 'z' , 'Z' will reset to Boot loader 
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/app_press_Z_to_boot.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/app_press_Z_to_boot.jpg)
 
 8. under boot loader project , below is sct file content
 
-![image](https://github.com/released/M2A23BSP_IAP_UART_app/blob/main/boot_KEIL_sct.jpg)
+![image](https://github.com/released/M2A23BSP_IAP_UART_APROM/blob/main/boot_KEIL_sct.jpg)
