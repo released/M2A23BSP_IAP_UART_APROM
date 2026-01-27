@@ -32,7 +32,7 @@ volatile uint32_t counter_tick = 0;
 #define DEBUG_UART_PORT_IRQn					        (UART1_IRQn)
 #define DEBUG_UART_IRQHandler					        (UART1_IRQHandler)
 
-//use excel to calculate , boot code : 12K (LDROM : 4K + APROM : 8K) , application : 116K  (size : 0x1D000 , end : 0x1FFFF) 
+//use excel to calculate , boot code : 12K , application : 116K  (size : 0x1D000 , end : 0x1FFFF) 
 #define CHECKSUM_ADDRESS                                (0x1FFFC)
 
 /*_____ M A C R O S ________________________________________________________*/

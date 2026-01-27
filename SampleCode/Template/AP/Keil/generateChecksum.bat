@@ -14,9 +14,18 @@ echo --------------------------------------------------------
 echo APP_START  = %APP_START%
 echo APP_SIZE   = %APP_SIZE%
 echo CRC_ADDR   = %CRC_ADDR%
-echo CRC_OFFSET = %CRC_OFFSET%
 echo APP_BIN    = %APP_BIN%
 echo ========================================================
+
+:: =========================================================
+:: Derived values (DO NOT EDIT)
+:: =========================================================
+
+:: Relative offset inside app-only binary
+set CRC_SIZE=4
+set /a CRC_OFFSET=CRC_ADDR - APP_START
+set /a CRC_END=CRC_ADDR + CRC_SIZE
+set /a CRC_OFFSET_END=CRC_OFFSET + CRC_SIZE
 
 :: --------------------------------------------------------
 :: Step 1: Build temporary APROM image and calculate CRC
@@ -33,17 +42,7 @@ echo ========================================================
 if errorlevel 1 goto err
 
 :: --------------------------------------------------------
-:: Step 2: Dump checksum (last 4 bytes) to terminal
-:: --------------------------------------------------------
-echo.
-echo ---- CRC32 @ 0x%CRC_ADDR% (HEX dump) ----
-%SREC% ^
-  %TMP_IMG% -binary ^
-  -crop %CRC_ADDR% %APROM_SIZE% ^
-  -o - -HEX_Dump
-
-:: --------------------------------------------------------
-:: Step 3: Write CRC back to app-only binary (relative offset)
+:: Step 2: Write CRC back to app-only binary (relative offset)
 :: --------------------------------------------------------
 %SREC% ^
   %APP_BIN% -binary ^
@@ -51,6 +50,17 @@ echo ---- CRC32 @ 0x%CRC_ADDR% (HEX dump) ----
   -crop 0x0000 %CRC_OFFSET% ^
   -crc32-l-e %CRC_OFFSET% ^
   -o %APP_BIN% -binary
+
+:: --------------------------------------------------------
+:: Step 3: Dump checksum (last 4 bytes) to terminal
+:: --------------------------------------------------------
+echo.
+echo ---- CRC32 @ %CRC_ADDR% (HEX dump) ----
+%SREC% ^
+  %APP_BIN% -binary ^
+  -crop %CRC_OFFSET% %CRC_OFFSET_END% ^
+  -o - -HEX_Dump
+
 
 if errorlevel 1 goto err
 
