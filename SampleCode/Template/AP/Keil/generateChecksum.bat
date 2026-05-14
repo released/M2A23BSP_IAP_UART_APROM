@@ -7,6 +7,8 @@ set SREC=srec_cat
 
 set APP_BIN=obj\APROM_application.bin
 set TMP_IMG=obj\_aprom_crc_tmp.bin
+set APP_HEX=obj\APROM_application.hex
+set APP_HEX_CRC=obj\APROM_application_crc.hex
 
 echo ========================================================
 echo Generate CRC32 (ABSOLUTE address semantics)
@@ -64,8 +66,23 @@ echo ---- CRC32 @ %CRC_ADDR% (HEX dump) ----
 
 if errorlevel 1 goto err
 
+:: --------------------------------------------------------
+:: Step 4: Generate CRC-patched Intel HEX for flashing
+:: --------------------------------------------------------
+%SREC% ^
+  %APP_BIN% -binary ^
+  -offset %APP_START% ^
+  -o %APP_HEX% -Intel
+
+if errorlevel 1 goto err
+
+copy /y %APP_HEX% %APP_HEX_CRC% >nul
+if errorlevel 1 goto err
+
 echo.
 echo CRC written back to app-only binary successfully.
+echo CRC-patched HEX generated: %APP_HEX%
+echo CRC-patched HEX copy generated: %APP_HEX_CRC%
 exit /b 0
 
 :err
